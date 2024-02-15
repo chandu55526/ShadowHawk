@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Icons</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="icon16" width="16" height="16"></canvas>
+  <canvas id="icon48" width="48" height="48"></canvas>
+  <canvas id="icon128" width="128" height="128"></canvas>
+  
+  <script>
+    function drawIcon(canvas) {
+      const ctx = canvas.getContext('2d');
+      const size = canvas.width;
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, size, size);
+      
+      // Draw background circle
+      ctx.beginPath();
+      ctx.arc(size/2, size/2, size/2 - 2, 0, Math.PI * 2);
+      ctx.fillStyle = '#3B82F6';
+      ctx.fill();
+      
+      // Draw cross
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = size/16;
+      ctx.lineCap = 'round';
+      
+      // Vertical line
+      ctx.beginPath();
+      ctx.moveTo(size/2, size/4);
+      ctx.lineTo(size/2, size*3/4);
+      ctx.stroke();
+      
+      // Horizontal line
+      ctx.beginPath();
+      ctx.moveTo(size/4, size/2);
+      ctx.lineTo(size*3/4, size/2);
+      ctx.stroke();
+      
+      // Draw center circle
+      ctx.beginPath();
+      ctx.arc(size/2, size/2, size/4, 0, Math.PI * 2);
+      ctx.fillStyle = 'white';
+      ctx.fill();
+      
+      // Draw inner circle
+      ctx.beginPath();
+      ctx.arc(size/2, size/2, size/6, 0, Math.PI * 2);
+      ctx.fillStyle = '#3B82F6';
+      ctx.fill();
+    }
+    
+    // Draw icons
+    drawIcon(document.getElementById('icon16'));
+    drawIcon(document.getElementById('icon48'));
+    drawIcon(document.getElementById('icon128'));
+    
+    // Add download buttons
+    function addDownloadButton(canvas, size) {
+      const button = document.createElement('button');
+      button.textContent = `Download ${size}x${size}`;
+      button.onclick = () => {
+        const link = document.createElement('a');
+        link.download = `icon${size}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      };
+      canvas.parentNode.appendChild(button);
+    }
+    
+    addDownloadButton(document.getElementById('icon16'), 16);
+    addDownloadButton(document.getElementById('icon48'), 48);
+    addDownloadButton(document.getElementById('icon128'), 128);
+  </script>
+</body>
+</html> 
