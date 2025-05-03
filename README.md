@@ -1,6 +1,15 @@
 # ShadowHawk - Real-time Browser Threat Detection System
 
-ShadowHawk is a comprehensive real-time browser threat detection system that monitors and analyzes web traffic for potential security threats.
+ShadowHawk is a comprehensive real-time browser threat detection system that monitors and analyzes web traffic for potential security threats. This project was developed as a showcase of modern web development skills and security implementation.
+
+## Development Timeline
+
+- **May 2024**: Initial development and implementation
+  - Set up project structure and configuration
+  - Implemented core frontend and backend functionality
+  - Developed browser extension prototype
+  - Added real-time threat detection features
+  - Implemented user authentication and dashboard
 
 ## Features
 
