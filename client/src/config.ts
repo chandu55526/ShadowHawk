@@ -1,3 +1,3 @@
 export const config = {
-  serverUrl: 'http://localhost:5001',
-}; 
+  serverUrl: "http://localhost:5001",
+};
