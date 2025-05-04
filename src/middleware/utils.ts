@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request } from 'express';
 import logger from '../config/logging';
 
 export const getClientIp = (req: Request): string => {
@@ -31,10 +31,4 @@ export const formatValidationError = (errors: ValidationError[]): FormattedError
     path: error.path.join('.'),
     message: error.message,
   }));
-};
-
-export const validateRequest = (schema: Schema) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    // ... existing code ...
-  };
 };
