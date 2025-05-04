@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Application, Request, Response, NextFunction } from 'express';
 import { createClient } from 'redis';
 import logger from '../config/logging';
 
@@ -14,7 +14,7 @@ redisClient.on('connect', () => {
   logger.info('Redis connection established');
 });
 
-export const setupCache = (app: any) => {
+export const setupCache = (app: Application) => {
   app.use(async (req: Request, res: Response, next: NextFunction) => {
     // Only cache GET requests
     if (req.method !== 'GET') {
@@ -83,6 +83,7 @@ export const cacheMiddleware = (duration: number) => {
   };
 };
 
-export const clearCache = async (req: Request, res: Response, next: NextFunction) => {
-  // ... existing code ...
+export const clearCache = async (_req: Request, _res: Response, _next: NextFunction): Promise<void> => {
+  // Implementation pending
+  throw new Error('Not implemented');
 };

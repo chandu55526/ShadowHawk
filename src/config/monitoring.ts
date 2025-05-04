@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Application, Request, Response } from 'express';
 import { register, Counter, Histogram } from 'prom-client';
 import responseTime from 'response-time';
 import logger from './logging';
@@ -23,10 +23,10 @@ const httpRequestDurationSeconds = new Histogram({
 });
 
 export const createMetric = (config: MetricsConfig): Counter | Histogram => {
-  // ... existing code ...
+  throw new Error('Not implemented');
 };
 
-export const setupMonitoring = (app: any) => {
+export const setupMonitoring = (app: Application) => {
   // Record metrics for each request
   app.use(
     responseTime((req: Request, res: Response, time: number) => {
