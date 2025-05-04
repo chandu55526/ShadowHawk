@@ -3,8 +3,6 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/chandu55526/ShadowHawk/main/assets/shadowhawk-banner.svg" alt="ShadowHawk Banner" width="800"/>
   
-  [![View Banner](https://raw.githubusercontent.com/chandu55526/ShadowHawk/main/assets/shadowhawk-banner.svg)](https://raw.githubusercontent.com/chandu55526/ShadowHawk/main/assets/shadowhawk-banner.svg)
-  
   [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
   [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
   [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
