@@ -82,3 +82,7 @@ export const cacheMiddleware = (duration: number) => {
     }
   };
 };
+
+export const clearCache = async (req: Request, res: Response, next: NextFunction) => {
+  // ... existing code ...
+};

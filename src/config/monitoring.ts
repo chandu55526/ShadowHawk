@@ -3,6 +3,12 @@ import { register, Counter, Histogram } from 'prom-client';
 import responseTime from 'response-time';
 import logger from './logging';
 
+interface MetricsConfig {
+  name: string;
+  help: string;
+  labelNames: string[];
+}
+
 // Initialize metrics
 const httpRequestsTotal = new Counter({
   name: 'http_requests_total',
@@ -15,6 +21,10 @@ const httpRequestDurationSeconds = new Histogram({
   help: 'Duration of HTTP requests in seconds',
   labelNames: ['method', 'route', 'status'],
 });
+
+export const createMetric = (config: MetricsConfig): Counter | Histogram => {
+  // ... existing code ...
+};
 
 export const setupMonitoring = (app: any) => {
   // Record metrics for each request
