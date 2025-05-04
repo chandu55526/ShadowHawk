@@ -14,6 +14,10 @@ redisClient.on('connect', () => {
   logger.info('Redis connection established');
 });
 
+interface CacheData {
+  [key: string]: unknown;
+}
+
 export const setupCache = (app: Application) => {
   app.use(async (req: Request, res: Response, next: NextFunction) => {
     // Only cache GET requests
@@ -34,7 +38,7 @@ export const setupCache = (app: Application) => {
       const originalSend = res.send;
 
       // Override send
-      res.send = function (body: any): Response {
+      res.send = function (body: CacheData): Response {
         try {
           // Store the response in cache
           redisClient.set(key, JSON.stringify(body), {
