@@ -1,10 +1,9 @@
-import { Request } from "express";
+import { Request } from 'express';
 
-export interface AuthRequest extends Request {
+export interface AuthenticatedRequest extends Request {
   user?: {
     id: string;
     role: string;
-    [key: string]: any;
   };
 }
 
@@ -14,7 +13,7 @@ export interface ValidationError {
 }
 
 export interface ErrorResponse {
-  error: string;
+  status: string;
   message: string;
-  details?: ValidationError[];
+  errors?: Array<{ message: string }>;
 }

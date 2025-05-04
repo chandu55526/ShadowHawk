@@ -1,9 +1,9 @@
-import { Router } from "express";
-import { User } from "../models/User";
-import { Threat } from "../models/Threat";
-import { authenticate, isAdmin } from "../middleware/auth";
-import logger from "../config/logging";
-import { Types } from "mongoose";
+import { Router } from 'express';
+import { User } from '../models/User';
+import { Threat } from '../models/Threat';
+import { authenticate, isAdmin } from '../middleware/auth';
+import logger from '../config/logging';
+import { Types } from 'mongoose';
 
 const router = Router();
 
@@ -22,13 +22,13 @@ router.use(authenticate, isAdmin);
  *       200:
  *         description: List of users
  */
-router.get("/users", async (req, res) => {
+router.get('/users', async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    const users = await User.find().select('-password');
     res.json(users);
   } catch (error) {
-    logger.error("Error fetching users:", error);
-    res.status(500).json({ error: "Internal server error" });
+    logger.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -50,14 +50,14 @@ router.get("/users", async (req, res) => {
  *       200:
  *         description: User deleted successfully
  */
-router.delete("/users/:id", async (req, res) => {
+router.delete('/users/:id', async (req, res) => {
   try {
     const userId = new Types.ObjectId(req.params.id);
     await User.findByIdAndDelete(userId);
-    res.json({ message: "User deleted successfully" });
+    res.json({ message: 'User deleted successfully' });
   } catch (error) {
-    logger.error("Error deleting user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    logger.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -73,15 +73,12 @@ router.delete("/users/:id", async (req, res) => {
  *       200:
  *         description: Threat analytics data
  */
-router.get("/threats", async (req, res) => {
+router.get('/threats', async (req, res) => {
   try {
     const [totalThreats, threatsByType, recentThreats] = await Promise.all([
       Threat.countDocuments(),
-      Threat.aggregate([{ $group: { _id: "$type", count: { $sum: 1 } } }]),
-      Threat.find()
-        .sort({ timestamp: -1 })
-        .limit(10)
-        .populate("detectedBy", "email"),
+      Threat.aggregate([{ $group: { _id: '$type', count: { $sum: 1 } } }]),
+      Threat.find().sort({ timestamp: -1 }).limit(10).populate('detectedBy', 'email'),
     ]);
 
     res.json({
@@ -90,8 +87,8 @@ router.get("/threats", async (req, res) => {
       recentThreats,
     });
   } catch (error) {
-    logger.error("Error fetching threat analytics:", error);
-    res.status(500).json({ error: "Internal server error" });
+    logger.error('Error fetching threat analytics:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -107,7 +104,7 @@ router.get("/threats", async (req, res) => {
  *       200:
  *         description: API usage statistics
  */
-router.get("/stats", async (req, res) => {
+router.get('/stats', async (req, res) => {
   try {
     const [totalUsers, activeUsers, apiCalls] = await Promise.all([
       User.countDocuments(),
@@ -124,8 +121,8 @@ router.get("/stats", async (req, res) => {
       threatDetectionRate: apiCalls / (totalUsers || 1),
     });
   } catch (error) {
-    logger.error("Error fetching stats:", error);
-    res.status(500).json({ error: "Internal server error" });
+    logger.error('Error fetching stats:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

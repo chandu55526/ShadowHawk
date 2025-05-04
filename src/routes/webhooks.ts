@@ -1,9 +1,9 @@
-import { Router } from "express";
-import { authenticate } from "../middleware/auth";
-import { webhookService } from "../services/webhook";
-import { validateRequest } from "../middleware/validation";
-import { z } from "zod";
-import logger from "../config/logging";
+import { Router } from 'express';
+import { authenticate } from '../middleware/auth';
+import { webhookService } from '../services/webhook';
+import { validateRequest } from '../middleware/validation';
+import { z } from 'zod';
+import logger from '../config/logging';
 
 const router = Router();
 
@@ -47,16 +47,16 @@ const webhookSchema = z.object({
  *       200:
  *         description: Webhook registered successfully
  */
-router.post("/", validateRequest(webhookSchema), async (req, res) => {
+router.post('/', validateRequest(webhookSchema), async (req, res) => {
   try {
     const { url, secret, events } = req.body;
     const id = `webhook_${Date.now()}`;
 
     webhookService.registerWebhook(id, { url, secret, events });
-    res.json({ id, message: "Webhook registered successfully" });
+    res.json({ id, message: 'Webhook registered successfully' });
   } catch (error) {
-    logger.error("Error registering webhook:", error);
-    res.status(500).json({ error: "Internal server error" });
+    logger.error('Error registering webhook:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -78,14 +78,14 @@ router.post("/", validateRequest(webhookSchema), async (req, res) => {
  *       200:
  *         description: Webhook deleted successfully
  */
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     webhookService.unregisterWebhook(id);
-    res.json({ message: "Webhook deleted successfully" });
+    res.json({ message: 'Webhook deleted successfully' });
   } catch (error) {
-    logger.error("Error deleting webhook:", error);
-    res.status(500).json({ error: "Internal server error" });
+    logger.error('Error deleting webhook:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -101,7 +101,7 @@ router.delete("/:id", async (req, res) => {
  *       200:
  *         description: List of webhooks
  */
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const webhooks = webhookService.getWebhooks();
     res.json(
@@ -109,11 +109,11 @@ router.get("/", async (req, res) => {
         id,
         url: config.url,
         events: config.events,
-      })),
+      }))
     );
   } catch (error) {
-    logger.error("Error listing webhooks:", error);
-    res.status(500).json({ error: "Internal server error" });
+    logger.error('Error listing webhooks:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

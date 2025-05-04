@@ -9,14 +9,14 @@ export const CACHE = {
 };
 
 export const CORS = {
-  ORIGIN: process.env.CORS_ORIGIN || "*",
-  METHODS: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  ALLOWED_HEADERS: ["Content-Type", "Authorization"],
+  ORIGIN: process.env.CORS_ORIGIN || '*',
+  METHODS: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  ALLOWED_HEADERS: ['Content-Type', 'Authorization'],
   CREDENTIALS: true,
   MAX_AGE: 86400, // 24 hours
 };
 
 export const SECURITY = {
-  JWT_SECRET: process.env.JWT_SECRET || "your-secret-key",
-  JWT_EXPIRES_IN: "1d",
+  JWT_SECRET: process.env.JWT_SECRET || 'your-secret-key',
+  JWT_EXPIRES_IN: '1d',
 };

@@ -1,7 +1,7 @@
-import { Router } from "express";
-import { connectDatabase } from "../config/database";
-import { createClient } from "redis";
-import logger from "../config/logging";
+import { Router } from 'express';
+import { connectDatabase } from '../config/database';
+import { createClient } from 'redis';
+import logger from '../config/logging';
 
 const router = Router();
 
@@ -17,24 +17,24 @@ const router = Router();
  *       503:
  *         description: Service is unhealthy
  */
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const health = {
-      status: "healthy",
+      status: 'healthy',
       timestamp: new Date().toISOString(),
       services: {
-        database: "unknown",
-        redis: "unknown",
+        database: 'unknown',
+        redis: 'unknown',
       },
     };
 
     // Check database connection
     try {
       const db = await connectDatabase();
-      health.services.database = db ? "connected" : "disconnected";
+      health.services.database = db ? 'connected' : 'disconnected';
     } catch (error) {
-      health.services.database = "error";
-      logger.error("Database health check failed:", error);
+      health.services.database = 'error';
+      logger.error('Database health check failed:', error);
     }
 
     // Check Redis connection
@@ -43,24 +43,24 @@ router.get("/", async (req, res) => {
       await redis.connect();
       await redis.ping();
       await redis.disconnect();
-      health.services.redis = "connected";
+      health.services.redis = 'connected';
     } catch (error) {
-      health.services.redis = "error";
-      logger.error("Redis health check failed:", error);
+      health.services.redis = 'error';
+      logger.error('Redis health check failed:', error);
     }
 
     // Determine overall health
     const isHealthy = Object.values(health.services).every(
-      (status) => status === "connected" || status === "unknown",
+      status => status === 'connected' || status === 'unknown'
     );
 
     res.status(isHealthy ? 200 : 503).json(health);
   } catch (error) {
-    logger.error("Health check failed:", error);
+    logger.error('Health check failed:', error);
     res.status(503).json({
-      status: "unhealthy",
+      status: 'unhealthy',
       timestamp: new Date().toISOString(),
-      error: "Health check failed",
+      error: 'Health check failed',
     });
   }
 });

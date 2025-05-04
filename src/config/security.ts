@@ -1,12 +1,11 @@
-import { Express } from "express";
-import { rateLimit } from "express-rate-limit";
-import { createClient } from "redis";
-import { RedisStore } from "rate-limit-redis";
-import logger from "./logging";
+import { Express } from 'express';
+import rateLimit from 'express-rate-limit';
+import { createClient } from 'redis';
+import RedisStore from 'rate-limit-redis';
 
 // Create Redis client
 const redisClient = createClient({
-  url: process.env.REDIS_URL || "redis://localhost:6379",
+  url: process.env.REDIS_URL || 'redis://localhost:6379',
 });
 
 // Configure rate limiter
@@ -17,17 +16,17 @@ const limiter = rateLimit({
   legacyHeaders: false,
   store: new RedisStore({
     sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    prefix: "rate-limit:",
+    prefix: 'rate-limit:',
     resetExpiryOnChange: true,
   }),
 });
 
 // Security headers
 const securityHeaders = {
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "DENY",
-  "X-XSS-Protection": "1; mode=block",
-  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
 };
 
 export const applySecurityMiddleware = (app: Express) => {

@@ -1,9 +1,9 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IThreat extends Document {
   url: string;
-  type: "malware" | "phishing" | "suspicious";
-  severity: "low" | "medium" | "high";
+  type: 'malware' | 'phishing' | 'suspicious';
+  severity: 'low' | 'medium' | 'high';
   detectedBy: string;
   details: {
     ipAddress?: string;
@@ -11,7 +11,7 @@ export interface IThreat extends Document {
     indicators?: string[];
     additionalInfo?: Record<string, unknown>;
   };
-  status: "active" | "resolved" | "false_positive";
+  status: 'active' | 'resolved' | 'false_positive';
   createdAt: Date;
   updatedAt: Date;
   resolvedAt?: Date;
@@ -26,12 +26,12 @@ const threatSchema = new Schema<IThreat>(
     },
     type: {
       type: String,
-      enum: ["malware", "phishing", "suspicious"],
+      enum: ['malware', 'phishing', 'suspicious'],
       required: true,
     },
     severity: {
       type: String,
-      enum: ["low", "medium", "high"],
+      enum: ['low', 'medium', 'high'],
       required: true,
     },
     detectedBy: {
@@ -46,8 +46,8 @@ const threatSchema = new Schema<IThreat>(
     },
     status: {
       type: String,
-      enum: ["active", "resolved", "false_positive"],
-      default: "active",
+      enum: ['active', 'resolved', 'false_positive'],
+      default: 'active',
     },
     resolvedAt: {
       type: Date,
@@ -63,4 +63,4 @@ threatSchema.index({ type: 1, severity: 1, status: 1 });
 threatSchema.index({ createdAt: 1 });
 threatSchema.index({ detectedBy: 1 });
 
-export const Threat = mongoose.model<IThreat>("Threat", threatSchema); 
+export const Threat = mongoose.model<IThreat>('Threat', threatSchema);

@@ -1,23 +1,23 @@
-import { Request, Response, NextFunction } from "express";
-import { createClient } from "redis";
-import logger from "../config/logging";
+import { Request, Response, NextFunction } from 'express';
+import { createClient } from 'redis';
+import logger from '../config/logging';
 
 const redisClient = createClient({
-  url: process.env.REDIS_URL || "redis://localhost:6379",
+  url: process.env.REDIS_URL || 'redis://localhost:6379',
 });
 
-redisClient.on("error", (error) => {
-  logger.error("Redis error:", error);
+redisClient.on('error', error => {
+  logger.error('Redis error:', error);
 });
 
-redisClient.on("connect", () => {
-  logger.info("Redis connection established");
+redisClient.on('connect', () => {
+  logger.info('Redis connection established');
 });
 
 export const setupCache = (app: any) => {
   app.use(async (req: Request, res: Response, next: NextFunction) => {
     // Only cache GET requests
-    if (req.method !== "GET") {
+    if (req.method !== 'GET') {
       return next();
     }
 
@@ -41,7 +41,7 @@ export const setupCache = (app: any) => {
             EX: 3600, // Cache for 1 hour
           });
         } catch (error) {
-          logger.error("Redis set error:", error);
+          logger.error('Redis set error:', error);
         }
 
         // Call the original send
@@ -50,8 +50,35 @@ export const setupCache = (app: any) => {
 
       next();
     } catch (error) {
-      logger.error("Cache middleware error:", error);
+      logger.error('Cache middleware error:', error);
       next();
     }
   });
-}; 
+};
+
+export const cacheMiddleware = (duration: number) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    if (req.method !== 'GET') {
+      return next();
+    }
+
+    const key = `cache:${req.originalUrl}`;
+    try {
+      const cachedData = await redisClient.get(key);
+      if (cachedData) {
+        return res.json(JSON.parse(cachedData));
+      }
+
+      const originalJson = res.json;
+      res.json = function (data: unknown) {
+        redisClient.set(key, JSON.stringify(data), { EX: duration });
+        return originalJson.call(this, data);
+      };
+
+      next();
+    } catch (error: unknown) {
+      logger.error('Redis set error:', error);
+      next();
+    }
+  };
+};

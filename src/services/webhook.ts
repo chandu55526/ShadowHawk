@@ -1,6 +1,6 @@
-import axios from "axios";
-import logger from "../config/logging";
-import { ThreatDetectionResult } from "./threatDetection";
+import axios from 'axios';
+import logger from '../config/logging';
+import { ThreatDetectionResult } from './threatDetection';
 
 interface WebhookConfig {
   url: string;
@@ -33,10 +33,8 @@ class WebhookService {
     logger.info(`Webhook unregistered: ${id}`);
   }
 
-  public async notifyThreatDetected(
-    result: ThreatDetectionResult,
-  ): Promise<void> {
-    const event = "threat_detected";
+  public async notifyThreatDetected(result: ThreatDetectionResult): Promise<void> {
+    const event = 'threat_detected';
     const payload = {
       event,
       timestamp: new Date().toISOString(),
@@ -47,11 +45,11 @@ class WebhookService {
       if (config.events.includes(event)) {
         try {
           const headers: Record<string, string> = {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           };
 
           if (config.secret) {
-            headers["X-Webhook-Secret"] = config.secret;
+            headers['X-Webhook-Secret'] = config.secret;
           }
 
           await axios.post(config.url, payload, { headers });

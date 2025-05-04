@@ -1,8 +1,8 @@
-import { URL } from "url";
-import dns from "dns";
-import { promisify } from "util";
-import logger from "../config/logging";
-import { Threat } from "../models/Threat";
+import { URL } from 'url';
+import dns from 'dns';
+import { promisify } from 'util';
+import logger from '../config/logging';
+import { Threat } from '../models/Threat';
 
 const dnsLookup = promisify(dns.lookup);
 
@@ -19,20 +19,13 @@ export interface ThreatDetectionResult {
 }
 
 // Known malicious patterns
-const maliciousPatterns = [
-  /malware/i,
-  /phish/i,
-  /hack/i,
-  /exploit/i,
-  /trojan/i,
-  /botnet/i,
-];
+const maliciousPatterns = [/malware/i, /phish/i, /hack/i, /exploit/i, /trojan/i, /botnet/i];
 
 // Known malicious domains
 const maliciousDomains = new Set([
-  "malware-domain.com",
-  "phishing-site.net",
-  "suspicious-domain.org",
+  'malware-domain.com',
+  'phishing-site.net',
+  'suspicious-domain.org',
 ]);
 
 export async function detectThreats(url: string): Promise<ThreatDetectionResult> {
@@ -61,13 +54,13 @@ export async function detectThreats(url: string): Promise<ThreatDetectionResult>
     // No threats detected
     return { isThreatenning: false };
   } catch (error) {
-    logger.error("Error in threat detection:", error);
+    logger.error('Error in threat detection:', error);
     return {
       isThreatenning: true,
-      type: "error",
-      severity: "low",
+      type: 'error',
+      severity: 'low',
       details: {
-        additionalInfo: { error: "Invalid URL or processing error" },
+        additionalInfo: { error: 'Invalid URL or processing error' },
       },
     };
   }
@@ -79,8 +72,8 @@ async function checkDomainReputation(domain: string): Promise<ThreatDetectionRes
     if (maliciousDomains.has(domain)) {
       return {
         isThreatenning: true,
-        type: "known_malicious",
-        severity: "high",
+        type: 'known_malicious',
+        severity: 'high',
         details: {
           domain,
         },
@@ -93,26 +86,26 @@ async function checkDomainReputation(domain: string): Promise<ThreatDetectionRes
     // Store the result for future reference
     await Threat.create({
       url: domain,
-      type: "suspicious",
-      severity: "low",
-      detectedBy: "system",
+      type: 'suspicious',
+      severity: 'low',
+      detectedBy: 'system',
       details: {
         ipAddress: address,
         domain,
       },
-      status: "active",
+      status: 'active',
     });
 
     return { isThreatenning: false };
   } catch (error) {
-    logger.error("DNS lookup error:", error);
+    logger.error('DNS lookup error:', error);
     return {
       isThreatenning: true,
-      type: "dns_failure",
-      severity: "low",
+      type: 'dns_failure',
+      severity: 'low',
       details: {
         domain,
-        additionalInfo: { error: "DNS lookup failed" },
+        additionalInfo: { error: 'DNS lookup failed' },
       },
     };
   }
@@ -123,8 +116,8 @@ function checkUrlPatterns(url: string): ThreatDetectionResult {
     if (pattern.test(url)) {
       return {
         isThreatenning: true,
-        type: "suspicious_pattern",
-        severity: "medium",
+        type: 'suspicious_pattern',
+        severity: 'medium',
         details: {
           indicators: [pattern.source],
         },
@@ -135,14 +128,14 @@ function checkUrlPatterns(url: string): ThreatDetectionResult {
 }
 
 function checkUrlParameters(parsedUrl: URL): ThreatDetectionResult {
-  const suspiciousParams = ["cmd", "exec", "run", "system", "shell"];
-  
+  const suspiciousParams = ['cmd', 'exec', 'run', 'system', 'shell'];
+
   for (const [key] of parsedUrl.searchParams) {
     if (suspiciousParams.includes(key.toLowerCase())) {
       return {
         isThreatenning: true,
-        type: "suspicious_params",
-        severity: "high",
+        type: 'suspicious_params',
+        severity: 'high',
         details: {
           indicators: [`Suspicious parameter: ${key}`],
         },
@@ -150,4 +143,4 @@ function checkUrlParameters(parsedUrl: URL): ThreatDetectionResult {
     }
   }
   return { isThreatenning: false };
-} 
+}

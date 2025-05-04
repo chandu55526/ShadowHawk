@@ -387,3 +387,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 - SOC 2 Type II certified
 - ISO 27001 certified
 - HIPAA compliant 
+
+NODE_ENV=test
+MONGODB_URI=mongodb://localhost:27017/test
+REDIS_URL=redis://localhost:6379
+PORT=3000
+JWT_SECRET=test-secret-key 

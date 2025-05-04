@@ -1,16 +1,12 @@
-import { Request, Response, NextFunction } from "express";
-import helmet from "helmet";
-import logger from "../config/logging";
+import { Request, Response, NextFunction } from 'express';
+import helmet from 'helmet';
+import logger from '../config/logging';
 
-export const securityHeaders = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const securityHeaders = (req: Request, res: Response, next: NextFunction) => {
   try {
     helmet()(req, res, next);
   } catch (err) {
-    logger.error("Security headers error:", err);
+    logger.error('Security headers error:', err);
     next();
   }
 };
