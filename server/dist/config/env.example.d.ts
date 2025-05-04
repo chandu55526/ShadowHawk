@@ -1,0 +1,23 @@
+export declare const env: {
+    PORT: string | number;
+    NODE_ENV: string;
+    MONGODB_URI: string;
+    MONGODB_USER: string;
+    MONGODB_PASSWORD: string;
+    REDIS_URL: string;
+    REDIS_PASSWORD: string;
+    JWT_SECRET: string;
+    JWT_EXPIRES_IN: string;
+    RATE_LIMIT_WINDOW_MS: number;
+    RATE_LIMIT_MAX_REQUESTS: number;
+    STRICT_RATE_LIMIT_WINDOW_MS: number;
+    STRICT_RATE_LIMIT_MAX_REQUESTS: number;
+    CORS_ORIGIN: string;
+    HELMET_ENABLED: boolean;
+    COMPRESSION_ENABLED: boolean;
+    LOG_LEVEL: string;
+    LOG_FILE: string;
+    ERROR_LOG_FILE: string;
+    PROMETHEUS_ENABLED: boolean;
+    METRICS_PORT: number;
+};
