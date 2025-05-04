@@ -22,7 +22,7 @@ const httpRequestDurationSeconds = new Histogram({
   labelNames: ['method', 'route', 'status'],
 });
 
-export const createMetric = (config: MetricsConfig): Counter | Histogram => {
+export const createMetric = (_config: MetricsConfig): Counter | Histogram => {
   throw new Error('Not implemented');
 };
 

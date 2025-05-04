@@ -83,7 +83,10 @@ export const cacheMiddleware = (duration: number) => {
   };
 };
 
-export const clearCache = async (_req: Request, _res: Response, _next: NextFunction): Promise<void> => {
-  // Implementation pending
+export const clearCache = async (
+  _req: Request,
+  _res: Response,
+  _next: NextFunction
+): Promise<void> => {
   throw new Error('Not implemented');
 };

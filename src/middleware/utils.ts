@@ -16,7 +16,17 @@ export const handleError = (error: unknown, context: string): void => {
   });
 };
 
-export const formatValidationError = (errors: any[]): any[] => {
+interface ValidationError {
+  path: string[];
+  message: string;
+}
+
+interface FormattedError {
+  path: string;
+  message: string;
+}
+
+export const formatValidationError = (errors: ValidationError[]): FormattedError[] => {
   return errors.map(error => ({
     path: error.path.join('.'),
     message: error.message,
