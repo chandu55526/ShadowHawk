@@ -10,6 +10,7 @@
   [![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
   [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
   [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/features/actions)
+  [![CI/CD](https://github.com/chandu55526/ShadowHawk/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/chandu55526/ShadowHawk/actions/workflows/ci-cd.yml)
 </div>
 
 ## 📋 Table of Contents
