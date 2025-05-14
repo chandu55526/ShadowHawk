@@ -1,20 +1,5 @@
 # 🛡️ ShadowHawk – Enterprise-Grade Browser Threat Detection Platform
 
-<p align="center">
-  <img src="./banner.png" alt="ShadowHawk Banner" width="100%" height="350px"/>
-</p>
-
-<div align="center">
-  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-  [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-  [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-  [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-  [![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
-  [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
-  [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/features/actions)
-  [![CI/CD Pipeline](https://github.com/chandu55526/ShadowHawk/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/chandu55526/ShadowHawk/actions/workflows/ci-cd.yml)
-</div>
-
 ## 📋 TL;DR
 ShadowHawk is an enterprise-grade browser threat detection platform that provides real-time monitoring, threat detection, and security analytics. Built with scalability and reliability in mind, it follows FAANG-level engineering practices and architectural patterns. The platform achieves sub-millisecond threat detection latency and 99.99% accuracy in identifying security threats.
 
