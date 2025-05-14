@@ -1,8 +1,10 @@
 # 🛡️ ShadowHawk – Enterprise-Grade Browser Threat Detection Platform
 
+<p align="center">
+  <img src="./banner.png" alt="ShadowHawk Banner" width="100%" height="400px"/>
+</p>
+
 <div align="center">
-  <img src="./banner.png" alt="ShadowHawk Banner" width="100%" height="500px"/>
-  
   [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
   [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
   [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
