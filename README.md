@@ -35,43 +35,217 @@ graph TD
     J --> K[Grafana]
 ```
 
-### Platform Screenshots
+## 🏗️ Detailed Build Guide
 
-<div align="center">
-  <img src="./Platform Screenshots.png" alt="ShadowHawk Platform Screenshots" width="100%" height="600px"/>
-  <p><em>ShadowHawk Platform Overview</em></p>
-</div>
+### 1. System Design & Architecture
 
-## Threat Detection Dashboard
-The dashboard provides real-time visualization of security threats and system metrics, powered by a Redis-backed event processing pipeline. It displays suspicious behavior logs, detection scores, and time-stamped events with millisecond precision. Built with React and Chart.js, it leverages WebSocket connections for live updates and Node.js for real-time data processing.
+#### High-Level Architecture
+- **Microservices Architecture**: Each component (Auth, Threat Detection, Analytics) runs as an independent service
+- **Event-Driven Design**: Using Redis Pub/Sub for real-time event processing
+- **CQRS Pattern**: Separate read and write models for optimal performance
+- **Circuit Breaker Pattern**: Implemented for fault tolerance and graceful degradation
 
-## Browser Extension
-The ShadowHawk browser extension actively monitors web traffic and user behavior patterns, capturing URLs, tab activity, and browsing patterns in real-time. Built with React and TypeScript, it communicates with the backend detection engine via secure WebSocket connections, ensuring minimal latency and reliable threat detection. The extension implements a zero-trust architecture with local threat detection capabilities.
-
-## System Monitoring
-Our monitoring system leverages Prometheus and Grafana to collect and visualize critical performance metrics including CPU usage, memory consumption, and event processing rates. The infrastructure is containerized using Docker Compose, with Prometheus automatically scraping metrics from all microservices. Custom alerting rules trigger notifications for performance degradation or security incidents, ensuring proactive system maintenance.
-
-### Directory Structure
+#### Data Flow
+```mermaid
+sequenceDiagram
+    participant BE as Browser Extension
+    participant AG as API Gateway
+    participant TD as Threat Detection
+    participant Cache as Redis Cache
+    participant DB as MongoDB
+    
+    BE->>AG: WebSocket Connection
+    AG->>TD: Event Stream
+    TD->>Cache: Check Cache
+    Cache-->>TD: Cache Response
+    TD->>DB: Persist Data
+    DB-->>TD: Confirmation
+    TD-->>BE: Real-time Update
 ```
-📁 /client                 – React-based browser extension
-├── 📁 /src               – Source code
-│   ├── 📁 /components   – React components
-│   ├── 📁 /hooks       – Custom React hooks
-│   └── 📁 /utils       – Utility functions
-│
-📁 /server                 – Node.js backend services
-├── 📁 /src               – Source code
-│   ├── 📁 /config      – Configuration files
-│   ├── 📁 /middleware  – Express middleware
-│   ├── 📁 /routes      – API routes
-│   ├── 📁 /services    – Business logic
-│   └── 📁 /utils       – Utility functions
-│
-📁 /docs                   – Documentation
-├── 📁 /api              – API documentation
-├── 📁 /architecture     – Architecture diagrams
-└── 📁 /guides           – Development guides
+
+### 2. Development Environment Setup
+
+#### Prerequisites
+```bash
+# Required Tools
+- Node.js 18+ (LTS)
+- MongoDB 6+
+- Redis 7+
+- Docker 24+
+- Kubernetes (for production)
+- Prometheus & Grafana
 ```
+
+#### Local Development Setup
+```bash
+# Clone and setup
+git clone https://github.com/chandu55526/ShadowHawk.git
+cd ShadowHawk
+
+# Install dependencies
+npm install
+
+# Setup environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Start development servers
+npm run dev
+```
+
+### 3. Code Organization & Best Practices
+
+#### Directory Structure
+```
+📁 /client
+├── 📁 /src
+│   ├── 📁 /components     # React components
+│   │   ├── 📁 /common    # Shared components
+│   │   ├── 📁 /features  # Feature-specific components
+│   │   └── 📁 /layouts   # Layout components
+│   ├── 📁 /hooks        # Custom React hooks
+│   ├── 📁 /store        # State management
+│   ├── 📁 /utils        # Utility functions
+│   └── 📁 /types        # TypeScript definitions
+│
+📁 /server
+├── 📁 /src
+│   ├── 📁 /config       # Configuration files
+│   ├── 📁 /middleware   # Express middleware
+│   ├── 📁 /routes       # API routes
+│   ├── 📁 /services     # Business logic
+│   ├── 📁 /models       # Data models
+│   ├── 📁 /utils        # Utility functions
+│   └── 📁 /types        # TypeScript definitions
+```
+
+#### Coding Standards
+- **TypeScript**: Strict mode enabled
+- **ESLint**: Airbnb style guide
+- **Prettier**: Consistent code formatting
+- **Jest**: Unit testing
+- **Cypress**: E2E testing
+
+### 4. Testing Strategy
+
+#### Unit Testing
+```bash
+# Run unit tests
+npm run test:unit
+
+# Coverage report
+npm run test:coverage
+```
+
+#### Integration Testing
+```bash
+# Run integration tests
+npm run test:integration
+```
+
+#### E2E Testing
+```bash
+# Run E2E tests
+npm run test:e2e
+```
+
+### 5. Performance Optimization
+
+#### Frontend Optimization
+- Code splitting and lazy loading
+- Memoization of expensive computations
+- Virtual scrolling for large lists
+- Service Worker for offline support
+
+#### Backend Optimization
+- Redis caching layer
+- Database indexing
+- Query optimization
+- Connection pooling
+
+### 6. Security Measures
+
+#### Authentication & Authorization
+- JWT-based authentication
+- Role-based access control (RBAC)
+- OAuth 2.0 integration
+- Rate limiting
+
+#### Data Security
+- Encryption at rest
+- TLS/SSL for data in transit
+- Input validation
+- XSS protection
+
+### 7. Monitoring & Logging
+
+#### Metrics Collection
+```yaml
+# Prometheus Configuration
+scrape_configs:
+  - job_name: 'shadowhawk'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:3000']
+```
+
+#### Logging Strategy
+- Structured logging with Winston
+- Log aggregation with ELK Stack
+- Error tracking with Sentry
+
+### 8. Deployment Pipeline
+
+#### CI/CD Configuration
+```yaml
+# GitHub Actions Workflow
+name: CI/CD Pipeline
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Tests
+        run: npm test
+      - name: Build
+        run: npm run build
+```
+
+#### Production Deployment
+```bash
+# Kubernetes deployment
+kubectl apply -f k8s/
+
+# Verify deployment
+kubectl get pods
+kubectl get services
+```
+
+### 9. Scaling Strategy
+
+#### Horizontal Scaling
+- Kubernetes auto-scaling
+- Load balancing
+- Database sharding
+- Cache distribution
+
+#### Vertical Scaling
+- Resource optimization
+- Memory management
+- CPU utilization
+- Network optimization
 
 ## 🚀 Key Features
 
