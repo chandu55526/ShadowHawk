@@ -40,13 +40,26 @@ graph TD
 <div align="center">
   <img src="./assets/dashboard.png" width="800" alt="Threat Detection Dashboard" />
   <p><em>Real-time Threat Detection Dashboard</em></p>
-  
+</div>
+
+## Threat Detection Dashboard
+The dashboard provides real-time visualization of security threats and system metrics, powered by a Redis-backed event processing pipeline. It displays suspicious behavior logs, detection scores, and time-stamped events with millisecond precision. Built with React and Chart.js, it leverages WebSocket connections for live updates and Node.js for real-time data processing.
+
+<div align="center">
   <img src="./assets/extension.png" width="400" alt="Browser Extension" />
   <p><em>Browser Extension Interface</em></p>
-  
+</div>
+
+## Browser Extension
+The ShadowHawk browser extension actively monitors web traffic and user behavior patterns, capturing URLs, tab activity, and browsing patterns in real-time. Built with React and TypeScript, it communicates with the backend detection engine via secure WebSocket connections, ensuring minimal latency and reliable threat detection. The extension implements a zero-trust architecture with local threat detection capabilities.
+
+<div align="center">
   <img src="./assets/monitoring.png" width="800" alt="System Monitoring" />
   <p><em>System Performance Monitoring</em></p>
 </div>
+
+## System Monitoring
+Our monitoring system leverages Prometheus and Grafana to collect and visualize critical performance metrics including CPU usage, memory consumption, and event processing rates. The infrastructure is containerized using Docker Compose, with Prometheus automatically scraping metrics from all microservices. Custom alerting rules trigger notifications for performance degradation or security incidents, ensuring proactive system maintenance.
 
 ### Directory Structure
 ```
