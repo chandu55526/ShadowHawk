@@ -38,7 +38,7 @@ graph TD
 ### Platform Screenshots
 
 <div align="center">
-  <img src="./assets/threat-dashboard.png" alt="Real-time Threat Detection Dashboard" width="100%" height="300px"/>
+  <img src="./assets/dashboard.png" alt="Real-time Threat Detection Dashboard" width="100%" height="300px"/>
   <p><em>Real-time Threat Detection Dashboard</em></p>
 </div>
 
@@ -46,7 +46,7 @@ graph TD
 The dashboard provides real-time visualization of security threats and system metrics, powered by a Redis-backed event processing pipeline. It displays suspicious behavior logs, detection scores, and time-stamped events with millisecond precision. Built with React and Chart.js, it leverages WebSocket connections for live updates and Node.js for real-time data processing.
 
 <div align="center">
-  <img src="./assets/browser-extension.png" alt="Browser Extension Interface" width="100%" height="300px"/>
+  <img src="./assets/extension.png" alt="Browser Extension Interface" width="100%" height="300px"/>
   <p><em>Browser Extension Interface</em></p>
 </div>
 
@@ -54,7 +54,7 @@ The dashboard provides real-time visualization of security threats and system me
 The ShadowHawk browser extension actively monitors web traffic and user behavior patterns, capturing URLs, tab activity, and browsing patterns in real-time. Built with React and TypeScript, it communicates with the backend detection engine via secure WebSocket connections, ensuring minimal latency and reliable threat detection. The extension implements a zero-trust architecture with local threat detection capabilities.
 
 <div align="center">
-  <img src="./assets/system-monitoring.png" alt="System Performance Monitoring" width="100%" height="300px"/>
+  <img src="./assets/monitoring.png" alt="System Performance Monitoring" width="100%" height="300px"/>
   <p><em>System Performance Monitoring</em></p>
 </div>
 
