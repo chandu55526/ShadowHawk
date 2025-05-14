@@ -1,5 +1,9 @@
 # 🛡️ ShadowHawk – Enterprise-Grade Browser Threat Detection Platform
 
+<p align="center">
+  <img src="./assets/banner.png" alt="ShadowHawk Banner" width="100%" height="350px"/>
+</p>
+
 ## 📋 TL;DR
 ShadowHawk is an enterprise-grade browser threat detection platform that provides real-time monitoring, threat detection, and security analytics. Built with scalability and reliability in mind, it follows FAANG-level engineering practices and architectural patterns. The platform achieves sub-millisecond threat detection latency and 99.99% accuracy in identifying security threats.
 
