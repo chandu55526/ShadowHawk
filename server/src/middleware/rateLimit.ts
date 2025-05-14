@@ -36,49 +36,32 @@ redisClient.connect().catch((err) => {
   logger.error("Redis connection error:", err);
 });
 
+// General API rate limiter
+export const apiLimiter = rateLimit({
+  store: new RedisStore({
+    sendCommand: (...args: string[]) => redisClient.sendCommand(args),
+  }),
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Stricter limiter for authentication routes
+export const authLimiter = rateLimit({
+  store: new RedisStore({
+    sendCommand: (...args: string[]) => redisClient.sendCommand(args),
+  }),
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5, // Limit each IP to 5 requests per windowMs
+  message: 'Too many login attempts, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 export const setupRateLimiting = (app: Express) => {
-  // Default rate limit
-  const defaultLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
-    standardHeaders: true,
-    legacyHeaders: false,
-    store: new RedisStore({
-      sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-      prefix: "rate_limit:",
-    }),
-    handler: (req, res) => {
-      logger.warn("Rate limit exceeded:", { ip: req.ip, path: req.path });
-      res.status(429).json({
-        error: "Too many requests",
-        message: "Please try again later",
-      });
-    },
-  });
-
-  // Strict rate limit for auth endpoints
-  const strictLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000, // 1 hour
-    max: 5, // limit each IP to 5 requests per windowMs
-    standardHeaders: true,
-    legacyHeaders: false,
-    store: new RedisStore({
-      sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-      prefix: "rate_limit_strict:",
-    }),
-    handler: (req, res) => {
-      logger.warn("Strict rate limit exceeded:", {
-        ip: req.ip,
-        path: req.path,
-      });
-      res.status(429).json({
-        error: "Too many requests",
-        message: "Please try again in an hour",
-      });
-    },
-  });
-
   // Apply rate limiting
-  app.use(defaultLimiter);
-  app.use("/api/auth/*", strictLimiter);
+  app.use(apiLimiter);
+  app.use("/api/auth/*", authLimiter);
 };

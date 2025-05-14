@@ -10,6 +10,8 @@ import { setupErrorHandling } from "./middleware/errorHandling";
 import healthRouter from "./routes/health";
 import docsRouter from "./routes/docs";
 import { errorHandler } from "./middleware/errorHandler";
+import { setupRateLimiting } from './middleware/rateLimit';
+import monitoringRouter from './routes/monitoring';
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -32,8 +34,17 @@ setupRoutes(app);
 // Setup error handling
 setupErrorHandling(app);
 
+// Rate limiting
+setupRateLimiting(app);
+
+// Routes
+app.use('/api/monitoring', monitoringRouter);
+
 // Error handling
-app.use(errorHandler);
+app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  logger.error('Unhandled error:', err);
+  res.status(500).json({ error: 'Internal server error' });
+});
 
 // Handle uncaught exceptions
 process.on("uncaughtException", (error) => {

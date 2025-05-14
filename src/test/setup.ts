@@ -26,14 +26,10 @@ afterAll(async () => {
   await mongod.stop();
 });
 
-beforeEach(async () => {
-  // Clear all collections before each test
-  const db = mongoose.connection.db;
-  if (!db) {
-    throw new Error("Database connection not established");
-  }
-  const collections = await db.collections();
-  for (const collection of collections) {
-    await collection.deleteMany({});
+// Clear database between tests
+afterEach(async () => {
+  const collections = mongoose.connection.collections;
+  for (const key in collections) {
+    await collections[key].deleteMany({});
   }
 });
