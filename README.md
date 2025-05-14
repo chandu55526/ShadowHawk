@@ -1,7 +1,7 @@
 # 🛡️ ShadowHawk – Enterprise-Grade Browser Threat Detection Platform
 
 <p align="center">
-  <img src="./assets/banner.png" alt="ShadowHawk Banner" width="100%" height="350px"/>
+  <img src="./banner.png" alt="ShadowHawk Banner" width="100%" height="350px"/>
 </p>
 
 ## 📋 TL;DR
